@@ -1,4 +1,4 @@
-//BubbleSortQ
+//BubbleSort
 //l-its our list , which will be Sort
 function BubbleSort(l){
     //Our list befor start operation

@@ -1,27 +1,16 @@
-//SelectionSort
-function SelectionSort(l){
-    //Do cycle for each element and select minId and insert on position
-    for(let i=0;i<l.length-1;i++){
-        let minId=i
-
-        for(let a=i;a<l.length-1;a++){
-            
-            if (l[minId]>l[a+1]){
-                minId=a+1
-            }
-    
-        }
-        
-        let t=l[minId]
-        l[minId]=l[i]
-        l[i]=t
-
+const SelectionSort = (l) => {
+  let sortedL = [...l];
+  for (let i = 0; i < l.length - 1; i++) {
+    let minIndex = i;
+    for (let j = i + 1; j < l.length; j++) {
+      if (sortedL[minIndex] > sortedL[j]) {
+        minIndex = j;
+      }
     }
-    return l
-}
+    [sortedL[minIndex], sortedL[i]] = [sortedL[i], sortedL[minIndex]];
+  }
+  return sortedL;
+};
 
-//Create ourList and Check our algorithm
-ourList=[2,1,6,3,1,7,4]
-console.log(SelectionSort(ourList))
-
-
+const l = [2, 5, 1, 7, 3, 9, 43, 12, 13, 13, 54, 23, 11];
+console.log(SelectionSort(l));

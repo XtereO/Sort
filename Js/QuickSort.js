@@ -1,20 +1,13 @@
-//QuickSort-Top2
-function QuickSort(l){
-    //Recursive Key
-    if (l.length<=1){
-        return l;
-    }
-    
-    //Divide our list on thre other
-    let pivot=l[Math.floor(Math.random()*(l.length-1))];
-    let litle=l.filter(value=>value<pivot);
-    let large=l.filter(value=>value>pivot);
-    let equal=l.filter(value=>value==pivot);
-    
-    //Do recursive
-    return [...QuickSort(litle),...equal,...QuickSort(large)];
-}
+const QuickSort = (l) => {
+  if (l.length < 2) {
+    return l;
+  }
+  const pivot = l[Math.round(Math.random() * (l.length - 1))];
+  const left = l.filter((i) => i < pivot);
+  const center = l.filter((i) => i === pivot);
+  const right = l.filter((i) => i > pivot);
+  return [...QuickSort(left), ...center, ...QuickSort(right)];
+};
 
-//Create ourList and check QuickSort
-ourList=[3,53,12,43,23,76,45]
-console.log(QuickSort(ourList))
+const l = [2, 5, 1, 7, 3, 9, 43, 12, 13, 13, 54, 23, 11];
+console.log(QuickSort(l));

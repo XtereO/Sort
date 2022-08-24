@@ -1,23 +1,16 @@
-//GnomSort
-function GnomSort(l){
-    let i=0;
-    while(i<l.length-1){
-        //Check on Okay
-        if((i<0) || (l[i+1]>=l[i])){
-            i++;
-        }
-        
-        //Do swop if not Okay
-        else{
-            let t=l[i];
-            l[i]=l[i+1];
-            l[i+1]=t;
-            i--;
-        }
+const GnomSort = (l) => {
+  let sortedL = [...l];
+  let i = 1;
+  while (i < l.length) {
+    if (i > 0 && sortedL[i - 1] > sortedL[i]) {
+      [sortedL[i - 1], sortedL[i]] = [sortedL[i], sortedL[i - 1]];
+      i--;
+    } else {
+      i++;
     }
-    return l;
-}
+  }
+  return sortedL;
+};
 
-//Create ourList and check CnomSort
-let ourList=[3,5,7,1,3,8,4,2];
-console.log(GnomSort(ourList))
+const l = [2, 5, 1, 7, 3, 9, 43, 12, 13, 13, 54, 23, 11];
+console.log(GnomSort(l));

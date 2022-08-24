@@ -1,24 +1,16 @@
-//InsertSort
-function InsertSort(l){
-    for(let a=1;a<l.length;a++){
-        //Take last item
-        let temp=l[a]
-        
-        //Create counter
-        let j=a-1
-        
-        //Do cycle until temp will be last item
-        while((j>=0)&(l[j]>temp)){
-            l[j+1]=l[j]
-            j-=1
-        }
-        
-        //Give temp place
-        l[j+1]=temp
+const InsertSort = (l) => {
+  const sortedL = [...l];
+  for (let i = 1; i < l.length; i++) {
+    const temp = sortedL[i];
+    let j = i;
+    while (j > 0 && sortedL[j - 1] > temp) {
+      sortedL[j] = sortedL[j - 1];
+      j--;
     }
-    return l
-}
+    sortedL[j] = temp;
+  }
+  return sortedL;
+};
 
-//Create ourList and run InsertSort
-ourList=[5,2,7,3,8,1,4,5,9]
-console.log(InsertSort(ourList))
+const l = [2, 5, 1, 7, 3, 9, 43, 12, 13, 13, 54, 23, 11];
+console.log(InsertSort(l));

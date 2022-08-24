@@ -1,42 +1,25 @@
-//ShellSort
-function ShellSort(l){
-    //Take Step
-    let step=Math.floor((l.length)/2)
-    
-    //Do cycle
-    while (step>0){
-        for(let a=0;a<l.length-step;a++){
-            //Compare "a" element with "a+step"
-            if (l[a]>l[a+step]){
-                let t=l[a]
-                l[a]=l[a+step]
-                l[a+step]=t
-            }
-        }
-        step=Math.floor(step/2)
+const ShellSort = (l) => {
+  let sortedL = [...l];
+  let step = Math.floor(l.length / 2);
+  while (step >= 1) {
+    for (let i = 0; i < l.length - step; i++) {
+      if (sortedL[i] > sortedL[i + step]) {
+        [sortedL[i], sortedL[i + step]] = [sortedL[i + step], sortedL[i]];
+      }
     }
-    
-    //InsertSort
-    for(let a=1;a<l.length;a++){
-        //Take last item
-        let temp=l[a]
-        
-        //Create counter
-        let j=a-1
-        
-        //Do cycle until temp will be last item
-        while((j>=0)&(l[j]>temp)){
-            l[j+1]=l[j]
-            j-=1
-        }
-        
-        //Give temp place
-        l[j+1]=temp
+    step = Math.floor(step / 2);
+  }
+  for (let i = 1; i < l.length; i++) {
+    const temp = sortedL[i];
+    let j = i;
+    while (j > 0 && sortedL[j - 1] > temp) {
+      sortedL[j] = sortedL[j - 1];
+      j--;
     }
-    return l
-}
+    sortedL[j] = temp;
+  }
+  return sortedL;
+};
 
-//Create ourList and run InsertSort
-ourList=[5,2,7,3,8,1,4,5,9]
-console.log(ShellSort(ourList))
-    
+const l = [2, 5, 1, 7, 3, 9, 43, 12, 13, 13, 54, 23, 11];
+console.log(ShellSort(l));

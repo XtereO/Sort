@@ -1,92 +1,71 @@
-class Heap{
-    constructor(){
-        this.items=[]
+class Heap {
+  items = [];
+  getParentId = (childId) => {
+    return Math.floor((childId - 1) / 2);
+  };
+  addItem = (item) => {
+    this.items.push(item);
+    let curId = this.items.length - 1;
+    if (curId !== 0) {
+      let parentId = this.getParentId(curId);
+      while (this.items[curId] > this.items[parentId] && curId !== 0) {
+        [this.items[curId], this.items[parentId]] = [
+          this.items[parentId],
+          this.items[curId],
+        ];
+        curId = parentId;
+        parentId = this.getParentId(curId);
+      }
     }
-    addItem(value){
-        //AddValue
-        this.items.push(value);
-        
-        //Take curId and Find Parents
-        let curId=(this.items.length)-1
-        let parId=Math.floor((curId-1)/2)
-        
-        //Do balance
-        while(curId>0 && this.items[curId]>this.items[parId]){
-            
-            let temp=this.items[curId]
-            this.items[curId]=this.items[parId]
-            this.items[parId]=temp
-            
-            curId=parId
-            parId=Math.floor((curId-1)/2)
-        }
+  };
+  getMax = () => {
+    return this.items[0] ?? null;
+  };
+  removeMax = () => {
+    const lastId = this.items.length - 1;
+    [this.items[0], this.items[lastId]] = [this.items[lastId], this.items[0]];
+    this.items.pop();
+    let curId = 0;
+    let left = 2 * curId + 1;
+    let right = 2 * curId + 2;
+    while (left <= this.items.length) {
+      if (
+        this.items[left] > this.items[curId] &&
+        (!this.items[right] || this.items[left] > this.items[right])
+      ) {
+        [this.items[left], this.items[curId]] = [
+          this.items[curId],
+          this.items[left],
+        ];
+        curId = left;
+      } else if (
+        this.items[right] &&
+        this.items[right] > this.items[curId] &&
+        this.items[right] > this.items[left]
+      ) {
+        [this.items[right], this.items[curId]] = [
+          this.items[curId],
+          this.items[right],
+        ];
+        curId = right;
+      } else {
+        break;
+      }
+      left = 2 * curId + 1;
+      right = 2 * curId + 2;
     }
-    
-    Sort(curId){
-        //Do identification
-        let maxId=curId;
-        let leftId=(curId*2)+1
-        let rightId=(curId*2)+2
-        
-        //Find maxId
-        if(leftId<this.items.length && this.items[maxId]<this.items[leftId]){
-            let temp=maxId
-            maxId=leftId
-            leftId=temp
-        }
-        if(rightId<this.items.length && this.items[maxId]<this.items[rightId]){
-            let temp=maxId
-            maxId=rightId
-            rightId=temp
-        }
-        
-        //Do swop maxId and curId elements
-        let temp= this.items[curId]
-        this.items[curId]=this.items[maxId]
-        this.items[maxId]=temp
-        
-        //Recursion Key
-        if(curId!=maxId){
-            this.Sort(maxId)
-        }
-        
+  };
+  sort = (l) => {
+    l.forEach((e) => this.addItem(e));
+    let sortedL = [];
+    while (this.items.length > 0) {
+      sortedL = [this.getMax(), ...sortedL];
+      this.removeMax();
     }
-    getMax(){
-        //Take max element
-        let result=this.items[0]
-        
-        //Take last item and swop with max
-        let lastItem=this.items[(this.items.length)-1]
-        this.items[0]=lastItem
-        this.items.pop()
-        
-        //CheckOnExistItems
-        if(this.items.length>0){
-            this.Sort(0)
-        }
-        
-        return result
-    }
-    
-    heapSort(l){
-        //Fill Heap
-        for(let key in l){
-            this.addItem(l[key])
-        }
-        
-        l=[]
-        let count=this.items.length
-        //RealeaseHeap
-        for(let i=0;i<count;i++){
-            l.push(this.getMax())
-        }
-        
-        //Reverse
-        l=l.reverse();
-        return l
-    }
+    return sortedL;
+  };
 }
 
-let heap=new Heap()
-let l=[23,64,12,34,65,83,21]
-console.log(heap.heapSort(l))
+const heap = new Heap();
+const l = [2, 5, 1, 7, 3, 9, 43, 12, 13, 13, 54, 23, 11];
+console.log(heap.sort(l));
